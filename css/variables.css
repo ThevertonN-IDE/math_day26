@@ -1,0 +1,49 @@
+    :root {
+        /* --- Paleta de Cores --- */
+        /* Azul Escuro Principal (Inspirado no Navy Académico) */
+        --primary-color: #002855;
+        --primary-dark: #001a38;
+        --primary-light: #004085;
+
+        /* Cores de Apoio e Neutras */
+        --secondary-color: #ffffff;
+        --bg-light: #f8fafc;
+        /* Cinza muito claro para fundos de secção */
+        --bg-white: #ffffff;
+
+        /* Cores de Texto */
+        --text-main: #1e293b;
+        /* Azul acinzentado escuro para leitura */
+        --text-muted: #64748b;
+        /* Para legendas e textos secundários */
+        --text-on-dark: #ffffff;
+
+        /* Cores de Estado (Úteis para o Ranking e Formulários) */
+        --success: #10b981;
+        /* Verde para acertos/subida no ranking */
+        --error: #ef4444;
+        /* Vermelho para erros no login */
+        --warning: #f59e0b;
+        /* Amarelo para avisos */
+
+        /* --- Tipografia --- */
+        /* Fonte sem serifa para corpo (foco em legibilidade) */
+        --font-main: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        /* Fonte monoespaçada para detalhes técnicos/matemáticos */
+        --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+
+        /* --- Espaçamento e Bordas --- */
+        --spacing-xs: 0.25rem;
+        --spacing-sm: 0.5rem;
+        --spacing-md: 1rem;
+        --spacing-lg: 2rem;
+        --spacing-xl: 4rem;
+
+        --border-radius: 8px;
+        /* Padrão para botões e cards */
+        --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.12);
+        --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+        /* --- Transições --- */
+        --transition-fast: 0.2s ease;
+    }

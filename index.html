@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>II MATDAY - IFRN campus Santa Cruz</title>
+    <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script type="module" src="js/ranking.js"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@500&display=swap"
+        rel="stylesheet">
+    <link rel="icon" type="image/png" href="assets/img/logo-evento.png">
+</head>
+
+<body>
+
+    <header>
+        <nav
+            style="display: flex; align-items: center; justify-content: space-between; max-width: 1200px; margin: 0 auto;">
+            <div style="display: flex; align-items: center; gap: 15px;">
+                <img src="assets/img/logo-evento.png" alt="Logo II MATDAY" style="height: 45px; width: auto;">
+                <h1 style="font-size: 1.5rem; margin: 0; color:aliceblue">I MATHDAY</h1>
+            </div>
+            <ul>
+                <li><a href="#inicio">Início</a></li>
+                <li><a href="#salas">Salas</a></li>
+                <li><a href="#ranking">Ranking</a></li>
+                <li><a href="pages/login.html">Acesso PIBID</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="inicio"
+            style="display: flex; flex-direction: column; align-items: center; text-align: center; background-color: var(--primary-color); color: white; padding: 60px 20px;">
+
+            <div
+                style="display: flex; justify-content: center; align-items: center; gap: 30px; margin-bottom: 30px; flex-wrap: wrap;">
+                <img src="assets/img/logo-evento.png" alt="Logo II MATDAY"
+                    style="height: 150px; width: auto; filter: drop-shadow(0px 5px 15px rgba(0,0,0,0.3));">
+                <img src="assets/img/logo-pibid.png" alt="Logo PIBID"
+                    style="height: 150px; width: auto; filter: drop-shadow(0px 5px 15px rgba(0,0,0,0.3));">
+            </div>
+
+            <p
+                style="font-family: var(--font-mono); color: #e0f2fe; font-weight: bold; letter-spacing: 2px; font-size: 1.1rem;">
+                06 DE MAIO DE 2026
+            </p>
+
+            <h1 style="margin-top: 10px; font-size: 3.5rem;">I MATHDAY</h1>
+
+            <div id="countdown"
+                style="display: flex; justify-content: center; gap: 25px; margin: 30px 0; font-family: var(--font-mono);">
+                <div style="text-align: center;">
+                    <span id="days" style="display: block; font-size: 3rem; font-weight: 800; color: #e0f2fe;">00</span>
+                    <small
+                        style="text-transform: uppercase; font-size: 0.75rem; opacity: 0.9; color: #e0f2fe;">Dias</small>
+                </div>
+                <div style="text-align: center;">
+                    <span id="hours"
+                        style="display: block; font-size: 3rem; font-weight: 800; color: #e0f2fe;">00</span>
+                    <small
+                        style="text-transform: uppercase; font-size: 0.75rem; opacity: 0.9; color: #e0f2fe;">Horas</small>
+                </div>
+                <div style="text-align: center;">
+                    <span id="minutes"
+                        style="display: block; font-size: 3rem; font-weight: 800; color: #e0f2fe;">00</span>
+                    <small
+                        style="text-transform: uppercase; font-size: 0.75rem; opacity: 0.9; color: #e0f2fe;">Min</small>
+                </div>
+                <div style="text-align: center;">
+                    <span id="seconds"
+                        style="display: block; font-size: 3rem; font-weight: 800; color: #e0f2fe;">00</span>
+                    <small
+                        style="text-transform: uppercase; font-size: 0.75rem; opacity: 0.9; color: #e0f2fe;">Seg</small>
+                </div>
+            </div>
+
+            <h2 style="color: white; border: none; font-weight: 300; margin-bottom: 15px; font-size: 1.4rem;">
+                DIA DA MATEMÁTICA: INOVAÇÃO E PRÁTICAS DOCENTES
+            </h2>
+            <p style="font-size: 1.1rem; opacity: 0.8;">IFRN Campus Santa Cruz — Santa Cruz / RN</p>
+
+            <p style="max-width: 750px; margin: 25px auto 0 auto; opacity: 0.9; line-height: 1.8;">
+                Promovido pelos bolsistas do PIBID de Matemática e demais alunos da Licenciatura,
+                o evento celebra o Dia da Matemática através de uma programação que integra
+                rigor acadêmico e ludicidade.
+            </p>
+        </section>
+
+        <section id="salas">
+            <h2>Programação e Espaços Temáticos</h2>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px;">
+                <article>
+                    <h3>Corredores Temáticos</h3>
+                    <p>Curiosidades históricas (Gregos, Árabes e Século XIX). Fique atento: perguntas surpresa podem
+                        surgir sobre os conteúdos expostos!</p>
+                </article>
+
+                <article>
+                    <h3>Sala de Raciocínio</h3>
+                    <p>Desafios lógicos e investigativos. O objetivo é resolver os problemas propostos no menor tempo
+                        possível para pontuar.</p>
+                </article>
+
+                <article>
+                    <h3>Sala Travessia</h3>
+                    <p>Desafios clássicos de lógica: a travessia dos Casais e o problema do Bode e o Repolho. Planeje
+                        cada movimento com precisão!</p>
+                </article>
+
+                <article>
+                    <h3>Sala de Vídeos</h3>
+                    <p>Exibição de peças teatrais autorais produzidas e editadas pelos bolsistas do PIBID, com gincana
+                        de perguntas ao final.</p>
+                </article>
+
+                <article>
+                    <h3>Sala da Plataforma</h3>
+                    <p>Apresentação oficial da <strong>Plataforma PIBID</strong>: um ecossistema digital de videoaulas
+                        voltado à preparação estratégica para o Exame de Seleção do IF e para o ENEM.</p>
+                </article>
+
+                <article>
+                    <h3>Geometria de Fractais</h3>
+                    <p>Uma exploração visual sobre as formas complexas da natureza e as gincanas que conectam teoria e
+                        prática.</p>
+                </article>
+            </div>
+        </section>
+
+        <section id="ranking">
+            <h2>Ranking das Turmas</h2>
+            <p style="text-align: center; margin-bottom: 20px;">Acompanhe a pontuação em tempo real das turmas
+                participantes.</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Posição</th>
+                        <th>Turma</th>
+                        <th>Pontos</th>
+                    </tr>
+                </thead>
+                <tbody id="ranking-body">
+                    <tr>
+                        <td>1º</td>
+                        <td>Exemplo: 1º Ano Informática</td>
+                        <td>0</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+    </main>
+
+    <footer>
+        <div
+            style="display: flex; justify-content: center; align-items: center; gap: 40px; margin-bottom: 20px; flex-wrap: wrap;">
+            <img src="assets/img/logo-evento.png" alt="Logo II MATDAY"
+                style="height: 60px; filter: brightness(0) invert(1);">
+            <img src="assets/img/logo-pibid.png" alt="Logo PIBID"
+                style="height: 60px; filter: brightness(0) invert(1);">
+        </div>
+        <p><strong>#PIBIDIFRNSANTACRUZ</strong> — O Futuro da Matemática em Movimento</p>
+        <p>Organização: PIBID Matemática — IFRN campus Santa Cruz.</p>
+        <p><strong>#DIAM</strong></p>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script type="module" src="js/ranking.js"></script>
+    <script src="js/countdown.js"></script>
+</body>
+</body>
+
+</html>

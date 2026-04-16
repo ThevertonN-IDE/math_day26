@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel de Lançamento - II MATDAY</title>
+    <link rel="stylesheet" href="../css/variables.css">
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+
+<body class="bg-light">
+
+    <header>
+        <nav>
+            <ul>
+                <li style="color: white; font-weight: bold;">PAINEL ADMINISTRATIVO</li>
+                <li><a href="../index.html">Ver Site</a></li>
+                <li><a href="#" id="logout-btn" style="color: var(--error);">Sair</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main style="max-width: 600px; margin: 40px auto; padding: 20px;">
+        <div style="background: white; padding: 30px; border-radius: var(--border-radius); shadow: var(--shadow-md);">
+            <h2 style="text-align: left; margin-bottom: 20px;">Lançar Pontuação</h2>
+            <div id="admin-turmas-section"
+                style="display: none; background: #e0f2fe; padding: 25px; border-radius: var(--border-radius); margin-bottom: 30px; border: 1px solid var(--primary-light);">
+                <h3 style="color: var(--primary-color); margin-bottom: 15px;">✨ Área do Coordenador: Cadastrar Turma
+                </h3>
+                <form id="cadastro-turma-form" style="display: flex; gap: 10px;">
+                    <input type="text" id="novo-nome-turma" placeholder="Ex: 2º Ano Edificações" required
+                        style="flex: 1; padding: 12px; border: 1px solid #ddd; border-radius: 4px;">
+                    <button type="submit"
+                        style="background: var(--primary-color); color: white; border: none; padding: 0 20px; border-radius: 4px; font-weight: bold; cursor: pointer;">
+                        Cadastrar
+                    </button>
+                </form>
+            </div>
+            <form id="pontos-form">
+                <div style="margin-bottom: 20px;">
+                    <label style="display: block; font-weight: 600; margin-bottom: 8px;">Turma:</label>
+                    <select id="select-turma" required
+                        style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 4px;">
+                        <option value="">Carregando turmas...</option>
+                    </select>
+                </div>
+
+                <div style="margin-bottom: 20px;">
+                    <label style="display: block; font-weight: 600; margin-bottom: 8px;">Atividade / Sala:</label>
+                    <select id="select-atividade" required
+                        style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 4px;">
+                        <option value="">Carregando atividades...</option>
+                    </select>
+                </div>
+
+                <div style="margin-bottom: 25px;">
+                    <label style="display: block; font-weight: 600; margin-bottom: 8px;">Pontos a Atribuir:</label>
+                    <input type="number" id="input-pontos" required placeholder="Ex: 10"
+                        style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 4px;">
+                    <small style="color: var(--text-muted);">Verifique os critérios da sala antes de enviar.</small>
+                </div>
+
+                <button type="submit" id="btn-enviar"
+                    style="width: 100%; background: var(--primary-color); color: white; border: none; padding: 15px; border-radius: 4px; font-weight: bold; cursor: pointer;">
+                    Confirmar Lançamento
+                </button>
+            </form>
+
+            <div id="feedback" style="margin-top: 20px; text-align: center; font-weight: bold; display: none;"></div>
+        </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script type="module" src="../js/admin.js"></script>
+</body>
+
+</html>

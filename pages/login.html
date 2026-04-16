@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acesso PIBID - I MATHDAY</title>
+    <link rel="stylesheet" href="../css/variables.css">
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body style="display: flex; align-items: center; justify-content: center; min-height: 100vh; background-color: var(--bg-light);">
+
+    <main style="width: 100%; max-width: 400px; padding: var(--spacing-lg);">
+        <div style="background: var(--bg-white); padding: var(--spacing-lg); border-radius: var(--border-radius); box-shadow: var(--shadow-md); border-top: 5px solid var(--primary-color);">
+            
+            <div style="text-align: center; margin-bottom: var(--spacing-lg);">
+                <h1 style="color: var(--primary-color); font-size: 1.5rem;">Acesso Restrito</h1>
+                <p style="color: var(--text-muted); font-size: 0.9rem;">Bolsistas e Organização PIBID</p>
+            </div>
+
+            <form id="login-form">
+                <div style="margin-bottom: var(--spacing-md);">
+                    <label for="email" style="display: block; font-weight: 600; margin-bottom: 5px;">E-mail</label>
+                    <input type="email" id="email" required style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px;">
+                </div>
+
+                <div style="margin-bottom: var(--spacing-lg);">
+                    <label for="password" style="display: block; font-weight: 600; margin-bottom: 5px;">Senha</label>
+                    <input type="password" id="password" required style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px;">
+                </div>
+
+                <button type="submit" style="width: 100%; background: var(--primary-color); color: white; border: none; padding: 12px; border-radius: 4px; font-weight: bold; cursor: pointer;">
+                    Entrar no Painel
+                </button>
+            </form>
+
+            <div id="error-message" style="color: var(--error); text-align: center; margin-top: 15px; font-size: 0.85rem; display: none;">
+                Dados incorretos. Verifique e tente novamente.
+            </div>
+
+            <div style="text-align: center; margin-top: 20px;">
+                <a href="../index.html" style="color: var(--primary-color); text-decoration: none; font-size: 0.85rem;">← Voltar para o Ranking</a>
+            </div>
+        </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script type="module" src="../js/auth.js"></script>
+</body>
+</html>
