@@ -26,6 +26,32 @@
             <h2 style="text-align: left; margin-bottom: 20px;">Lançar Pontuação</h2>
             <div id="admin-turmas-section"
                 style="display: none; background: #e0f2fe; padding: 25px; border-radius: var(--border-radius); margin-bottom: 30px; border: 1px solid var(--primary-light);">
+                <div class="admin-controls mt-4">
+                    <h3>🛠️ Gerenciar Evento</h3>
+                    <hr>
+
+                    <div class="card p-3 mb-4">
+                        <h4>Nova Atividade / Sala</h4>
+                        <form id="cadastro-atividade-form" class="row g-2">
+                            <div class="col-md-8">
+                                <input type="text" id="nome-nova-sala" class="form-control"
+                                    placeholder="Nome da Sala (Ex: Torre de Hanói)" required>
+                            </div>
+                            <div class="col-md-4">
+                                <button type="submit" class="btn btn-success w-100">Adicionar Sala</button>
+                            </div>
+                        </form>
+
+                        <ul id="lista-atividades-admin" class="list-group mt-3">
+                        </ul>
+                    </div>
+
+                    <div class="card p-3">
+                        <h4>Turmas Cadastradas</h4>
+                        <ul id="lista-turmas-admin" class="list-group">
+                        </ul>
+                    </div>
+                </div>
                 <h3 style="color: var(--primary-color); margin-bottom: 15px;">✨ Área do Coordenador: Cadastrar Turma
                 </h3>
                 <form id="cadastro-turma-form" style="display: flex; gap: 10px;">
@@ -74,4 +100,5 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script type="module" src="../js/admin.js"></script>
 </body>
+
 </html>
