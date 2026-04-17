@@ -2,8 +2,7 @@ import { supabaseClient } from './supabase_client.js';
 
 console.log("🚀 Admin.js carregado com sucesso!");
 
-// --- 1. FUNÇÕES GLOBAIS (Para o HTML enxergar) ---
-// Em módulos, precisamos pendurar no 'window' para o onclick funcionar
+// --- 1. FUNÇÕES GLOBAIS (Para o HTML enxergar os botões de excluir) ---
 window.excluirTurma = async (id) => {
     if (confirm("Deseja realmente excluir esta turma? Isso apagará todos os pontos dela!")) {
         const { error } = await supabaseClient.from('turmas').delete().eq('id', id);
@@ -19,10 +18,10 @@ window.excluirAtividade = async (id) => {
     }
 };
 
-// --- 2. VERIFICAÇÃO DE ACESSO ---
+// --- 2. FUNÇÃO PRINCIPAL DE VERIFICAÇÃO ---
 async function verificarAcesso() {
     const { data: { session } } = await supabaseClient.auth.getSession();
-    
+
     if (!session) {
         window.location.href = 'login.html';
         return;
@@ -39,7 +38,7 @@ async function verificarAcesso() {
         return;
     }
 
-    // Se for boss, ativa as funções de admin
+    // TUDO QUE DEPENDE DO PERFIL FICA AQUI DENTRO
     if (perfil?.is_boss) {
         console.log("⭐ Modo Boss confirmado!");
         const adminSection = document.getElementById('admin-turmas-section');
@@ -50,17 +49,20 @@ async function verificarAcesso() {
             configurarFormulariosAdmin();
         }
     }
+
+    // Carrega os selects de pontuação para TODO MUNDO (Boss e Bolsista)
+    popularSelects();
 }
 
-// --- 3. CARREGAMENTO DE LISTAS ---
+// --- 3. CARREGAMENTO DE LISTAS (ADMIN) ---
 async function carregarTurmasAdmin() {
     const { data: turmas } = await supabaseClient.from('turmas').select('*').order('nome_exibicao');
     const lista = document.getElementById('lista-turmas-admin');
     if (lista) {
         lista.innerHTML = turmas.map(t => `
-            <li class="list-group-item d-flex justify-content-between align-items-center" style="padding: 10px; border-bottom: 1px solid #eee;">
+            <li style="display: flex; justify-content: space-between; padding: 10px; border-bottom: 1px solid #eee;">
                 ${t.nome_exibicao}
-                <button onclick="excluirTurma('${t.id}')" style="background: var(--error); color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer;">🗑️</button>
+                <button onclick="excluirTurma('${t.id}')" style="background: #ff4d4d; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer;">Excluir</button>
             </li>
         `).join('');
     }
@@ -71,37 +73,64 @@ async function carregarAtividadesAdmin() {
     const lista = document.getElementById('lista-atividades-admin');
     if (lista) {
         lista.innerHTML = atividades.map(a => `
-            <li class="list-group-item d-flex justify-content-between align-items-center" style="padding: 10px; border-bottom: 1px solid #eee;">
+            <li style="display: flex; justify-content: space-between; padding: 10px; border-bottom: 1px solid #eee;">
                 ${a.nome_sala}
-                <button onclick="excluirAtividade('${a.id}')" style="background: none; border: 1px solid var(--error); color: var(--error); padding: 5px 10px; border-radius: 4px; cursor: pointer;">Excluir</button>
+                <button onclick="excluirAtividade('${a.id}')" style="background: none; border: 1px solid #ff4d4d; color: #ff4d4d; padding: 5px 10px; border-radius: 4px; cursor: pointer;">Excluir</button>
             </li>
         `).join('');
     }
 }
 
-// --- 4. CONFIGURAÇÃO DE FORMS ---
+// --- 4. POPULAR SELECTS (PARA LANÇAR PONTOS) ---
+async function popularSelects() {
+    const { data: turmas } = await supabaseClient.from('turmas').select('*').order('nome_exibicao');
+    const { data: atividades } = await supabaseClient.from('atividades').select('*').order('nome_sala');
+
+    const selectTurma = document.getElementById('select-turma');
+    const selectAtiv = document.getElementById('select-atividade');
+
+    if (selectTurma && turmas) {
+        selectTurma.innerHTML = '<option value="">Selecione a Turma</option>' +
+            turmas.map(t => `<option value="${t.id}">${t.nome_exibicao}</option>`).join('');
+    }
+    if (selectAtiv && atividades) {
+        selectAtiv.innerHTML = '<option value="">Selecione a Atividade</option>' +
+            atividades.map(a => `<option value="${a.id}">${a.nome_sala}</option>`).join('');
+    }
+}
+
+// --- 5. CONFIGURAÇÃO DE FORMS ---
 function configurarFormulariosAdmin() {
-    const formAtividade = document.getElementById('cadastro-atividade-form');
-    formAtividade?.addEventListener('submit', async (e) => {
+    document.getElementById('cadastro-atividade-form')?.addEventListener('submit', async (e) => {
         e.preventDefault();
         const nome = document.getElementById('nome-nova-sala').value;
-        const { error } = await supabaseClient.from('atividades').insert([{ nome_sala: nome }]);
-        if (error) alert("Erro: " + error.message);
-        else {
-            formAtividade.reset();
-            carregarAtividadesAdmin();
-        }
+        await supabaseClient.from('atividades').insert([{ nome_sala: nome }]);
+        document.getElementById('cadastro-atividade-form').reset();
+        carregarAtividadesAdmin();
+        popularSelects(); // Atualiza o select de lançar pontos também
     });
 
-    const formTurma = document.getElementById('cadastro-turma-form');
-    formTurma?.addEventListener('submit', async (e) => {
+    document.getElementById('cadastro-turma-form')?.addEventListener('submit', async (e) => {
         e.preventDefault();
         const nome = document.getElementById('novo-nome-turma').value;
-        const { error } = await supabaseClient.from('turmas').insert([{ nome_exibicao: nome, pontuacao_total: 0 }]);
-        if (error) alert("Erro: " + error.message);
-        else {
-            formTurma.reset();
-            carregarTurmasAdmin();
+        await supabaseClient.from('turmas').insert([{ nome_exibicao: nome, pontuacao_total: 0 }]);
+        document.getElementById('cadastro-turma-form').reset();
+        carregarTurmasAdmin();
+        popularSelects();
+    });
+    // Adicione isso ao final do seu admin.js
+    document.getElementById('logout-btn')?.addEventListener('click', async (e) => {
+        e.preventDefault(); // Impede a página de recarregar antes da hora
+
+        console.log("Encerrando sessão...");
+
+        const { error } = await supabaseClient.auth.signOut();
+
+        if (error) {
+            console.error("Erro ao sair:", error.message);
+        } else {
+            // Limpa qualquer dado residual e manda para o login
+            window.location.href = 'login.html';
         }
     });
 }
