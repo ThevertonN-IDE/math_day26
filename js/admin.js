@@ -58,11 +58,12 @@ async function verificarAcesso() {
 async function carregarTurmasAdmin() {
     const { data: turmas } = await supabaseClient.from('turmas').select('*').order('nome_exibicao');
     const lista = document.getElementById('lista-turmas-admin');
-    if (lista) {
+    if (lista && turmas) {
+        // Correção: usando 'turmas.map' e 't.nome_exibicao'
         lista.innerHTML = turmas.map(t => `
-            <li style="display: flex; justify-content: space-between; padding: 10px; border-bottom: 1px solid #eee;">
-                ${t.nome_exibicao}
-                <button onclick="excluirTurma('${t.id}')" style="background: #ff4d4d; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer;">Excluir</button>
+            <li>
+                ${t.nome_exibicao} 
+                <button onclick="excluirTurma('${t.id}')" class="btn-delete">Excluir</button>
             </li>
         `).join('');
     }
@@ -71,11 +72,12 @@ async function carregarTurmasAdmin() {
 async function carregarAtividadesAdmin() {
     const { data: atividades } = await supabaseClient.from('atividades').select('*').order('nome_sala');
     const lista = document.getElementById('lista-atividades-admin');
-    if (lista) {
+    if (lista && atividades) {
+        // Correção: usando 'atividades.map' e 'a.nome_sala'
         lista.innerHTML = atividades.map(a => `
-            <li style="display: flex; justify-content: space-between; padding: 10px; border-bottom: 1px solid #eee;">
-                ${a.nome_sala}
-                <button onclick="excluirAtividade('${a.id}')" style="background: none; border: 1px solid #ff4d4d; color: #ff4d4d; padding: 5px 10px; border-radius: 4px; cursor: pointer;">Excluir</button>
+            <li>
+                ${a.nome_sala} 
+                <button onclick="excluirAtividade('${a.id}')" class="btn-delete">Excluir</button>
             </li>
         `).join('');
     }
@@ -118,22 +120,66 @@ function configurarFormulariosAdmin() {
         carregarTurmasAdmin();
         popularSelects();
     });
-    // Adicione isso ao final do seu admin.js
-    document.getElementById('logout-btn')?.addEventListener('click', async (e) => {
-        e.preventDefault(); // Impede a página de recarregar antes da hora
-
-        console.log("Encerrando sessão...");
-
-        const { error } = await supabaseClient.auth.signOut();
-
-        if (error) {
-            console.error("Erro ao sair:", error.message);
-        } else {
-            // Limpa qualquer dado residual e manda para o login
-            window.location.href = 'login.html';
-        }
-    });
 }
 
-// Inicializa tudo
+document.getElementById('logout-btn')?.addEventListener('click', async (e) => {
+    e.preventDefault(); // Impede a página de recarregar antes da hora
+
+    console.log("Encerrando sessão...");
+
+    const { error } = await supabaseClient.auth.signOut();
+
+    if (error) {
+        console.error("Erro ao sair:", error.message);
+    } else {
+        // Limpa qualquer dado residual e manda para o login
+        window.location.href = 'login.html';
+    }
+});
+// --- 6. LÓGICA DE LANÇAMENTO DE PONTOS ---
+document.getElementById('pontos-form')?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const turmaId = document.getElementById('select-turma').value;
+    const atividadeId = document.getElementById('select-atividade').value;
+    const pontos = parseInt(document.getElementById('input-pontos').value);
+    const feedback = document.getElementById('feedback');
+
+    try {
+        // 1. Registra o log na tabela (importante para o desempate que criamos)
+        const { error: errorLog } = await supabaseClient
+            .from('logs_pontuacao')
+            .insert([{ turma_id: turmaId, atividade_id: atividadeId, pontos: pontos }]);
+        if (errorLog) throw errorLog;
+
+        // 2. Busca o total atual da turma
+        const { data: turma, error: errorTurma } = await supabaseClient
+            .from('turmas')
+            .select('pontuacao_total')
+            .eq('id', turmaId)
+            .single();
+        if (errorTurma) throw errorTurma;
+
+        // 3. Atualiza a pontuação total
+        const novoTotal = (turma.pontuacao_total || 0) + pontos;
+        const { error: errorUpdate } = await supabaseClient
+            .from('turmas')
+            .update({ pontuacao_total: novoTotal })
+            .eq('id', turmaId);
+        if (errorUpdate) throw errorUpdate;
+
+        // Sucesso visual
+        feedback.style.display = 'block';
+        feedback.style.color = 'var(--success)';
+        feedback.innerText = "✅ Pontuação lançada com sucesso!";
+        document.getElementById('pontos-form').reset();
+
+        // Some com a mensagem após 3 segundos
+        setTimeout(() => feedback.style.display = 'none', 3000);
+
+    } catch (err) {
+        feedback.style.display = 'block';
+        feedback.style.color = 'var(--error)';
+        feedback.innerText = "❌ Erro ao lançar: " + err.message;
+    }
+});
 verificarAcesso();

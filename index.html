@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="css/variables.css">
     <link rel="stylesheet" href="css/style.css">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script type="module" src="js/ranking.js"></script>
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@500&display=swap"
         rel="stylesheet">
@@ -132,27 +131,34 @@
             </div>
         </section>
 
-        <section id="ranking">
-            <h2>Ranking das Turmas</h2>
-            <p style="text-align: center; margin-bottom: 20px;">Acompanhe a pontuação em tempo real das turmas
-                participantes.</p>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Posição</th>
-                        <th>Turma</th>
-                        <th>Pontos</th>
-                    </tr>
-                </thead>
-                <tbody id="ranking-body">
-                    <tr>
-                        <td>1º</td>
-                        <td>Exemplo: 1º Ano Informática</td>
-                        <td>0</td>
-                    </tr>
-                </tbody>
-            </table>
+        <section id="secao-ranking" style="display: none; margin: 60px auto;">
+            <div class="section-title">
+                <h2 style="text-align: center;">Placar Oficial</h2>
+                <p style="text-align: center; opacity: 0.7;">Atualização em tempo real</p>
+            </div>
+
+            <div class="ranking-table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Rank</th>
+                            <th>Equipe / Turma</th>
+                            <th>Pontuação</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabela-ranking-body"></tbody>
+                </table>
+            </div>
         </section>
+
+        <div id="aviso-ranking"
+            style="text-align: center; padding: 50px 20px; margin: 40px auto; max-width: 600px; border-radius: var(--border-radius);">
+            <h3>EM BREVE</h3>
+            <p style="font-size: 1.1rem; color: var(--text-main);">
+                O ranking está sendo preparado. As pontuações aparecerão aqui conforme as equipes completarem os
+                desafios!
+            </p>
+        </div>
     </main>
 
     <footer>
@@ -170,7 +176,6 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script type="module" src="js/ranking.js"></script>
     <script src="js/countdown.js"></script>
-</body>
 </body>
 
 </html>
