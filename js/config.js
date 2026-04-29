@@ -7,8 +7,6 @@ const CONFIG = {
     // Substitua 'SUA_URL_AQUI' pela URL que aparece no seu painel do Supabase
     // Exemplo: https://xyzcorp.supabase.co
     SUPABASE_URL: "https://uurlzvfehiadeorlpthn.supabase.co",
-    
-    // Sua chave pública (anon key) fornecida
     SUPABASE_KEY: "sb_publishable_Lzlc48g9tTg5TQse07wcNw_dT58OKeW"
 };
 
