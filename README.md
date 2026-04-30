@@ -28,4 +28,4 @@ Sistema desenvolvido para o evento acadêmico **I MATHDAY** do **IFRN Campus San
 
 1. Clone o repositório:
    ```bash
-   git clone [https://github.com/thevertonn-ide/math_day26.git](https://github.com/thevertonn-ide/math_day26.git)
+   git clone [https://github.com/thevertonn-ide/math_day26.git](https://github.com/thevertonn-ide/math_day26.git) 
