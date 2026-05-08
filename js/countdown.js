@@ -2,7 +2,7 @@
  * Lógica do Contador Regressivo - II MATDAY
  */
 
-const targetDate = new Date("May 6, 2026 00:00:00").getTime();
+const targetDate = new Date("May 13, 2026 00:00:00").getTime();
 
 function updateCountdown() {
     const now = new Date().getTime();
